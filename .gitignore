@@ -1,3 +1,4 @@
+.vscode
 build
 ext
 test/include/catch.h
