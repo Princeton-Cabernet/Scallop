@@ -25,8 +25,9 @@ find_package(Threads REQUIRED)
 
 set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 
-
+add_subdirectory(controller)
 add_subdirectory(test)
+
 
 
 # if (NOT DEFINED WITH_CONTROLLER
