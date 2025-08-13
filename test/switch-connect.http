@@ -1,9 +1,0 @@
-
-WEBSOCKET ws://localhost:3302
-Content-Type: application/json // We use it for highlighting
-
-===
-{
-  "type": "hello"
-}
-=== wait-for-server

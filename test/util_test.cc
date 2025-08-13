@@ -103,11 +103,6 @@ TEST_CASE("util: extractBits", "[util]") {
 
     SECTION("throws when given an invalid range") {
 
-//        CHECK_THROWS_AS(util::extractBits(v1, 0, 14), std::invalid_argument);
-//        CHECK_THROWS_AS(util::extractBits(v1, 8, 4), std::invalid_argument);
-//        CHECK_THROWS_AS(util::extractBits(v1, 9, 2), std::invalid_argument);
-//        CHECK_THROWS_AS(util::extractBits(v1, 0, 0), std::invalid_argument);
-//        CHECK_THROWS_AS(util::extractBits(v1, 0, 33), std::invalid_argument);
         CHECK_NOTHROW(util::extractBits(v1, 9, 1));
         CHECK_NOTHROW(util::extractBits(v1, 8, 2));
     }
@@ -117,7 +112,6 @@ TEST_CASE("util: extractBits", "[util]") {
         CHECK(util::extractBits(v1, 0) == 0b1);
         CHECK(util::extractBits(v1, 0, 10) == 0b10'1011'1011);
         CHECK(util::extractBits(v1, 4, 4) == 0b1110);
-
     }
 }
 
