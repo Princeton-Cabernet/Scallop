@@ -1,14 +1,5 @@
 
-find_package(PkgConfig REQUIRED)
-pkg_search_module(OPENSSL REQUIRED openssl)
-
-if(OPENSSL_FOUND)
-    message(STATUS "Detecting libopenssl - done
-   OPENSSL_INCLUDE_DIRS: ${OPENSSL_INCLUDE_DIRS}
-   OPENSSL_LIBRARIES: ${OPENSSL_LIBRARIES}
-   OPENSSL_LINK_LIBRARIES: ${OPENSSL_LINK_LIBRARIES}
-   OPENSSL_VERSION: ${OPENSSL_VERSION}")
-endif()
+include(../cmake/openssl.cmake)
 
 set(CONTROLLER_LIB_FILES
     api.h
@@ -52,15 +43,3 @@ target_link_libraries(controller PRIVATE ${Boost_LIBRARIES})
 target_link_libraries(controller PRIVATE Threads::Threads)
 target_link_libraries(controller PRIVATE ${OPENSSL_LINK_LIBRARIES})
 set_target_properties(controller PROPERTIES LINKER_LANGUAGE CXX)
-
-# add_executable(wss_test
-#         wss_test_main.cc
-#         ${CONTROLLER_LIB_FILES})
-
-# target_include_directories(wss_test PRIVATE ../ext/include)
-# target_include_directories(wss_test PRIVATE  ${Boost_INCLUDE_DIRS})
-# target_include_directories(wss_test PRIVATE ${OPENSSL_INCLUDE_DIRS})
-# target_link_libraries(wss_test PRIVATE ${Boost_LIBRARIES})
-# target_link_libraries(wss_test PRIVATE Threads::Threads)
-# target_link_libraries(wss_test PRIVATE ${OPENSSL_LINK_LIBRARIES})
-# set_target_properties(wss_test PROPERTIES LINKER_LANGUAGE CXX)
