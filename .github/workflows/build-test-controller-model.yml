@@ -1,0 +1,25 @@
+name: build/test controller/model
+on: [push]
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: "ubuntu jammy"
+            os: ubuntu-22.04
+            dep_install: "DEBIAN_FRONTEND=noninteractive sudo  apt-get update && sudo apt-get install -y cmake g++ libboost-dev libnice-dev libpcap-dev pkg-config wget"
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: ${{ matrix.config.dep_install }}
+      - name: Configure build
+        run: mkdir -p build && cd build && cmake ..
+      - name: Build project
+        run: make -j$(nproc) -C build
+      - name: Run unit tests
+        run: build/test/unit -s
