@@ -1,0 +1,10 @@
+.cache
+.DS_Store
+.parcel-cache
+.vscode
+dist/*.png
+dist/*.css
+dist/*.css.map
+dist/*.js
+dist/*.js.map
+node_modules

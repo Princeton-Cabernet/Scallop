@@ -1,0 +1,140 @@
+
+@import 'npm:milligram/dist/milligram.css';
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    font-weight: normal;
+    font-size: 10pt;
+}
+
+table {
+
+    border-collapse: collapse;
+    padding: 0;
+    margin: 5px 0;
+
+    th {
+        font-weight:bold;
+    }
+
+    th, td {
+        padding: 2px 8px;
+    }
+
+    tr:last-child {
+        td {
+            border-bottom: 0;
+        }
+    }
+}
+
+#status {
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid #ddd;
+    display: block;
+    text-align: center;
+    height: 25px;
+    font-weight: bold;
+
+    background: url("p4-sfu.png") no-repeat;
+    background-size: 60px 22px;
+
+    &.connected {
+        color: green;
+    }
+
+    &.disconnected {
+        color: red;
+    }
+}
+
+#signal {
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid #ddd;
+    
+    #local, #remote {
+        display: block;
+
+        table {
+            width: 100%;
+        }
+    }
+
+    li:not(:last-child) {
+        margin-bottom: 2px;
+    }
+
+    ul {
+        list-style-type: '- ';
+        margin: 2px 10px;
+        line-height: normal;
+    }
+}
+
+.participant {
+
+    margin: 0 0 10px 0;
+
+    .video-view {
+        position: relative;
+        height: 180px;
+        width: 240px;
+        background: #eee;
+        float: left;
+
+        video {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .controls {
+            position: absolute;
+            left: 10px;
+            top: 135px;
+
+            #start-video-btn {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            #start-audio-btn {
+                display: inline-block;
+            }
+        }
+    }
+
+    .info {
+        border-left: 1px solid #ddd;
+        color: #222;
+        font-size: 10pt;
+        margin-left: 5px;
+        padding: 5px;
+    }
+}
+
+.disabled {
+    display: none;
+}
+
+button {
+    background: #003366;
+    padding: 0;
+    margin: 0;
+    border: 0.1rem solid #003366;
+    width: 105px;
+    height: 38px;
+}
+
+button[disabled] {
+    cursor: default;
+    opacity: 0.5;
+}
+
+button[disabled]:hover {
+    background: #003366;
+    border: 0.1rem solid #003366;
+    cursor: default;
+    opacity: 0.5;
+}

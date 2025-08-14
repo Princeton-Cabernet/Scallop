@@ -1,0 +1,6 @@
+.gitignore
+.parcel-cache
+.vscode
+dist/
+node_modules/
+package-lock.json

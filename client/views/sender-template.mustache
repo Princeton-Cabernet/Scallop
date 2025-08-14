@@ -1,0 +1,7 @@
+<b>CP:</b> local={{localCandidate.ip}}:{{localCandidate.port}}, remote={{remoteCandidate.ip}}:{{remoteCandidate.port}}<br/>
+<b>PC:</b> packetsSent={{candidatePair.packetsSent}}, bytesSent={{candidatePair.bytesSent}}, packetsReceived={{candidatePair.packetsReceived}}, bytesReceived={{candidatePair.bytesReceived}}, state={{candidatePair.state}}, rtt={{candidatePair.currentRoundTripTime}}<br/>
+
+{{#outboundRTP}}
+    <b>RTP [out]:</b> kind={{kind}}, ssrc={{ssrc}}, packets={{packetsSent}}, bytes={{bytesSent}}, fps={{framesPerSecond}} ({{frameWidth}}/{{frameHeight}})<br/>
+    <b>..</b> keyFrames={{keyFramesEncoded}}, pliCount={{pliCount}}, nackCount={{nackCount}}, firCount={{firCount}}<br/>
+{{/outboundRTP}}

@@ -1,0 +1,8 @@
+<b>Participant:</b> {{meta.associatedParticipantId}}<br/>
+<b>CP:</b> local={{localCandidate.ip}}:{{localCandidate.port}}, remote={{remoteCandidate.ip}}:{{remoteCandidate.port}}<br/>
+<b>PC:</b> packetsSent={{candidatePair.packetsSent}}, bytesSent={{candidatePair.bytesSent}}, packetsReceived={{candidatePair.packetsReceived}}, bytesReceived={{candidatePair.bytesReceived}}, state={{candidatePair.state}}, rtt={{candidatePair.currentRoundTripTime}}<br/>
+
+{{#inboundRTP}}
+    <b>RTP [in]:</b> kind={{kind}}, ssrc={{ssrc}}, packets={{packetsReceived}}, bytes={{bytesReceived}}, fps={{framesPerSecond}} ({{frameWidth}}/{{frameHeight}})<br/>
+    <b>..</b> keyFrames={{keyFramesDecoded}}, framesDropped={{framesDropped}}, pliCount={{pliCount}}, nackCount={{nackCount}}, firCount={{firCount}}<br/>
+{{/inboundRTP}}

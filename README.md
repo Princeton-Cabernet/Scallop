@@ -18,4 +18,8 @@ make -j$(nproc)
 
 ### Client Application
 
-
+```shell
+cd client
+npm install
+npm run build
+```

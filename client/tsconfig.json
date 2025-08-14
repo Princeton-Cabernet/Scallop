@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,       
+        "lib": ["es6", "DOM"],
+        "strict": true,
+        "target": "es6"
+    }
+}

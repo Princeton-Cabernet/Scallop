@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>P4-SFU Client</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<div class="container">
+    <div class="row disconnected" id="status">disconnected</div>
+    <div class="row participant" id="self">
+        <div class="video-view">
+            <audio id="audio-self" autoplay="" muted=""></audio>
+            <video id="video-self" autoplay="" muted=""></video>
+            <div class="controls">
+                <button id="start-video-btn">Start Video</button>
+                <button id="start-audio-btn">Start Audio</button>
+            </div>
+        </div>
+        <div class="info">&nbsp;</div>
+    </div>
+    <div id="receivers"></div>
+</div>
+
+<script id="sender-template" type="x-tmpl-mustache">{{sender-tpl}}</script>
+<script id="receiver-panel-tpl" type="x-tmpl-mustache">{{receiver-panel-tpl}}</script>
+<script id="receiver-info-tpl" type="x-tmpl-mustache">{{receiver-info-tpl}}</script>
+<script type="module" src="client.js" data-config="{{config}}"></script>
+
+</html>
