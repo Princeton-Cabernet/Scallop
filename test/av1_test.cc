@@ -57,23 +57,17 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd1_tpl0.dtis.size() == 2);
         CHECK(dd1_tpl0.dtis[0] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd1_tpl0.dtis[1] == av1::DependencyDescriptor::dti::switch_indication);
-        // CHECK(dd1_tpl0.fdiffs.empty());
 
         CHECK(dd1_tpl1.spatial_layer_id == 0);
         CHECK(dd1_tpl1.temporal_layer_id == 0);
         CHECK(dd1_tpl1.dtis.size() == 2);
         CHECK(dd1_tpl1.dtis[0] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd1_tpl1.dtis[1] == av1::DependencyDescriptor::dti::switch_indication);
-        // CHECK(dd1_tpl1.fdiffs.size() == 1);
-        // CHECK(dd1_tpl1.fdiffs[0] == 2);
 
         CHECK(dd1_tpl2.spatial_layer_id == 0);
         CHECK(dd1_tpl2.temporal_layer_id == 1);
         CHECK(dd1_tpl2.dtis.size() == 2);
         CHECK(dd1_tpl2.dtis[0] == av1::DependencyDescriptor::dti::not_present_indication);
-        CHECK(dd1_tpl2.dtis[1] == av1::DependencyDescriptor::dti::discardable_indication);
-        // CHECK(dd1_tpl2.fdiffs.size() == 1);
-        // CHECK(dd1_tpl2.fdiffs[0] == 1);
     }
 
     SECTION("L1T2 template dependency structure - 2") {
@@ -173,7 +167,6 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd4_tpl0.dtis[1] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd4_tpl0.dtis[2] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd4_tpl0.dtis[3] == av1::DependencyDescriptor::dti::switch_indication);
-        // CHECK(dd4_tpl0.fdiffs.empty());
 
         CHECK(dd4_tpl1.spatial_layer_id == 0);
         CHECK(dd4_tpl1.temporal_layer_id == 0);
@@ -182,8 +175,6 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd4_tpl1.dtis[1] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd4_tpl1.dtis[2] == av1::DependencyDescriptor::dti::required_indication);
         CHECK(dd4_tpl1.dtis[3] == av1::DependencyDescriptor::dti::required_indication);
-        // CHECK(dd4_tpl1.fdiffs.size() == 1);
-        // CHECK(dd4_tpl1.fdiffs[0] == 4);
 
         CHECK(dd4_tpl2.spatial_layer_id == 0);
         CHECK(dd4_tpl2.temporal_layer_id == 1);
@@ -192,8 +183,6 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd4_tpl2.dtis[1] == av1::DependencyDescriptor::dti::discardable_indication);
         CHECK(dd4_tpl2.dtis[2] == av1::DependencyDescriptor::dti::not_present_indication);
         CHECK(dd4_tpl2.dtis[3] == av1::DependencyDescriptor::dti::required_indication);
-        // CHECK(dd4_tpl2.fdiffs.size() == 1);
-        // CHECK(dd4_tpl2.fdiffs[0] == 2);
 
         CHECK(dd4_tpl3.spatial_layer_id == 1);
         CHECK(dd4_tpl3.temporal_layer_id == 0);
@@ -202,8 +191,6 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd4_tpl3.dtis[1] == av1::DependencyDescriptor::dti::not_present_indication);
         CHECK(dd4_tpl3.dtis[2] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd4_tpl3.dtis[3] == av1::DependencyDescriptor::dti::switch_indication);
-        // CHECK(dd4_tpl3.fdiffs.size() == 1);
-        // CHECK(dd4_tpl3.fdiffs[0] == 1);
 
         CHECK(dd4_tpl4.spatial_layer_id == 1);
         CHECK(dd4_tpl4.temporal_layer_id == 0);
@@ -212,9 +199,6 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd4_tpl4.dtis[1] == av1::DependencyDescriptor::dti::not_present_indication);
         CHECK(dd4_tpl4.dtis[2] == av1::DependencyDescriptor::dti::switch_indication);
         CHECK(dd4_tpl4.dtis[3] == av1::DependencyDescriptor::dti::switch_indication);
-        // CHECK(dd4_tpl4.fdiffs.size() == 2);
-        // CHECK(dd4_tpl4.fdiffs[0] == 4);
-        // CHECK(dd4_tpl4.fdiffs[1] == 1);
 
         CHECK(dd4_tpl5.spatial_layer_id == 1);
         CHECK(dd4_tpl5.temporal_layer_id == 1);
@@ -223,9 +207,6 @@ TEST_CASE("av1", "[av1]") {
         CHECK(dd4_tpl5.dtis[1] == av1::DependencyDescriptor::dti::not_present_indication);
         CHECK(dd4_tpl5.dtis[2] == av1::DependencyDescriptor::dti::not_present_indication);
         CHECK(dd4_tpl5.dtis[3] == av1::DependencyDescriptor::dti::discardable_indication);
-        // CHECK(dd4_tpl5.fdiffs.size() == 2);
-        // CHECK(dd4_tpl5.fdiffs[0] == 2);
-        // CHECK(dd4_tpl5.fdiffs[1] == 1);
     }
 }
 

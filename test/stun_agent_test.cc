@@ -69,11 +69,6 @@ TEST_CASE("STUNAgent", "[stun_agent]") {
 
     CHECK(result == STUN_USAGE_ICE_RETURN_SUCCESS);
     CHECK(bindResponseBufLen == 80);
-
-//    for (auto i = 0; i < 80; i++) {
-//        std::cout << std::setw(2) << std::setfill('0') << std::hex << (unsigned) bindResponseBuf[i] << " ";
-//        if (i % 8 == 7) std::cout << std::endl;
-//    }
 }
 
 TEST_CASE("STUNAgent: addPeer", "[stun_agent]") {
