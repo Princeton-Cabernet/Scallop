@@ -1,4 +1,4 @@
-name: build/test controller/model
+name: build/test controller/agent
 on: [push]
 
 jobs:
