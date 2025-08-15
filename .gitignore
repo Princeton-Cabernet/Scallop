@@ -2,3 +2,5 @@
 build
 ext
 test/include/catch.h
+cert.pem
+key.pem

@@ -14,11 +14,11 @@ void printHelp(cxxopts::Options& opts, int exitCode = 0) {
 
 cxxopts::Options setOptions() {
 
-    cxxopts::Options opts("tofino_agent", "P4-SFU Tofino Agent");
+    cxxopts::Options opts("tofino_agent", "Scallop Tofino Agent");
 
     opts.add_options()
         ("i,switch-id", "switch id", cxxopts::value<unsigned>(), "ID")
-        ("l,data-plane-iface", "data-plane interface", cxxopts::value<std::string>(), "IFACE")
+        ("l,data-plane-iface", "data-plane interface (required)", cxxopts::value<std::string>(), "IFACE")
         ("c,controller", "controller address", cxxopts::value<std::string>(),"IP:PORT")
         ("u,ice-ufrag", "ICE user-name fragment", cxxopts::value<std::string>(), "UFRAG")
         ("p,ice-pwd", "ICE password", cxxopts::value<std::string>(), "PWD")

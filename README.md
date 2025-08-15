@@ -28,3 +28,34 @@ cd client
 npm install
 npm run build
 ```
+
+## Create certificate
+
+* for *localhost*:
+
+```shell
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem \
+  -days 365 -nodes -subj "/CN=localhost"
+```
+
+## Run Scallop
+
+### Controller
+
+```shell
+build/controller/controller
+```
+
+### Tofino Agent
+
+```shell
+build/agent/tofino_agent -l <veth>
+```
+
+### Tofino PRE Adapter
+
+...
+
+### Client
+
+...
