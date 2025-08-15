@@ -1,0 +1,66 @@
+---
+- name: launch
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    region: us-east-1
+    instance_type: t2.xlarge
+    ami: ami-0a7d80731ae1b2435
+    key_name: aws-aug25
+    vpc_id: vpc-0fe6b76bf20a1299e
+    ebs_volume_id: vol-0d64ec8ee7252166f
+    device_name: /dev/xvdf
+
+  tasks:
+    - name: create security group
+      amazon.aws.ec2_security_group:
+        name: "scallop-vm-sg"
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        description: "security group for Scallop VM"
+        rules: 
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+      register: sg
+
+    - name: create subnet
+      amazon.aws.ec2_vpc_subnet:
+        vpc_id: "{{ vpc_id }}"
+        cidr: 172.31.80.0/20
+        region: "{{ region }}"
+      register: subnet
+
+    - name: launch instance
+      amazon.aws.ec2_instance:
+        name: scallop-vm
+        key_name: "{{ key_name }}"
+        region: "{{ region }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ ami }}"
+        wait: yes
+        count: 1
+        volumes:
+          - device_name: /dev/sda1
+            ebs:
+              volume_size: 32
+              delete_on_termination: false
+        network:
+          assign_public_ip: true
+          subnet_id: "{{ subnet.subnet.id }}"
+          groups:
+            - "{{ sg.group_id }}"
+      register: ec2
+
+    - name: add instance to local inventory file
+      lineinfile:
+        path: ./hosts
+        line: "scallop-vm ansible_host={{ ec2.instances[0].public_dns_name }}"
+        create: yes
+
+    - name: output instance info
+      debug:
+        var: ec2.instances

@@ -1,0 +1,12 @@
+---
+- name: provision
+  hosts: scallop-vm
+  become: yes
+  tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+
+    - name: upgrade all packages
+      apt:
+        upgrade: dist
