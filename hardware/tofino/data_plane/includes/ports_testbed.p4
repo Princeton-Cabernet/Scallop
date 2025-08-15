@@ -1,0 +1,8 @@
+#pragma once
+
+#define CPU_PORT 192
+#define CABERNET802_PORT 4
+#define CABMEATY02_PORT 44
+
+#define BLUEFIELD3_PORT_P0 20
+#define BLUEFIELD3_PORT_P1 36

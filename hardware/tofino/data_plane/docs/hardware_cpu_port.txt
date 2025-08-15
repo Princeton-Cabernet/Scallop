@@ -1,0 +1,24 @@
+# Step 1
+Unload the bf_kdrv_driver if loaded:
+$ sudo $SDE_INSTALL/bin/bf_kdrv_mod_unload $SDE_INSTALL
+
+# Step 2
+Load the bf_kpkt_driver:
+$ sudo $SDE_INSTALL/bin/bf_kpkt_mod_load $SDE_INSTALL
+
+# Step 3
+Check if the driver was loaded:
+$ lsmod | grep bf
+bf_kpkt  17047552  2
+
+# Step 4
+Find the CPU PCIE port (ens1 on Ubuntu):
+$ CPU_PCIE=`basename /sys/module/bf_kpkt/drivers/pci\:bf/*/net/*`
+$ echo $CPU_PCIE
+ens1
+
+# Step 5
+Bring the CPU PCIE port up:
+$ sudo ip link set ${CPU_PCIE} up
+
+

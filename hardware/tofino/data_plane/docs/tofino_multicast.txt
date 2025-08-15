@@ -1,0 +1,41 @@
+for (n1 in multicast group’s list of level 1 nodes) {
+
+    if (n1 is an ECMP node) {
+        sel1 = select one of the Individual level 1 nodes in
+                n1’s list using the value pkt.level1_mcast_hash,
+                with equal weight;
+    } else {
+        sel1 = n1;
+    }
+
+    prune1 = n1.L1_XID_VALID && (pkt.level1_exclusion_id == n1.L1_XID);
+
+    if (prune1) {
+        // Make no copies of the packet descriptor for n1
+
+    } else {
+        for (n2 in concatenate(n1.dev_port_list, n1.lag_list)) {
+            if (n2 is a LAG) {
+                sel2 = select one of the individual ports in the LAG’s
+                        list using the value pkt.level2_mcast_hash,
+                        with equal weight;
+            } else {
+                sel2 = n2;
+            }
+        }
+
+        prune2 = (pkt.rid == n1.RID) &&
+            (sel2.port in the set PRE.L2_exclusion_table[pkt.level2_exclusion_id]);
+
+        if (prune2) {
+            // Make no copies of the packet descriptor for port n2.port
+        } else {
+            // Make one copy of the packet descriptor for port n2.port.
+            // If it does not bypass egress processing, its egress
+            // intrinsic metadata fields will be initialized like this:
+            egress_port = sel2.port;
+            egress_rid = sel1.RID;
+            egress_rid_first = see text below;
+        }
+    }
+}
