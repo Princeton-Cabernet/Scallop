@@ -6,11 +6,12 @@
 
   vars:
     region: us-east-1
-    instance_type: t2.xlarge
-    ami: ami-0a7d80731ae1b2435
-    key_name: aws-aug25
+    instance_type: t2.large
+    ami_id: ami-0a7d80731ae1b2435
+    key_name: scallop-demo-key
     vpc_id: vpc-0fe6b76bf20a1299e
     ebs_volume_id: vol-0d64ec8ee7252166f
+    eip_allocation_id: eipalloc-0fad0cf275d2ba4ea
     device_name: /dev/xvdf
 
   tasks:
@@ -36,11 +37,11 @@
 
     - name: launch instance
       amazon.aws.ec2_instance:
-        name: scallop-vm
+        name: scallop-demo
         key_name: "{{ key_name }}"
         region: "{{ region }}"
         instance_type: "{{ instance_type }}"
-        image_id: "{{ ami }}"
+        image_id: "{{ ami_id}}"
         wait: yes
         count: 1
         volumes:
@@ -55,11 +56,19 @@
             - "{{ sg.group_id }}"
       register: ec2
 
-    - name: add instance to local inventory file
-      lineinfile:
-        path: ./hosts
-        line: "scallop-vm ansible_host={{ ec2.instances[0].public_dns_name }}"
-        create: yes
+    # - name: attach eip
+    #   amazon.aws.ec2_eip:
+    #     region: "{{ region }}"
+    #     device_id: "{{ ec2.instances[0].instance_id }}"
+    #     public_ip: 18.233.50.103
+    #     state: present
+    #   register: eip
+
+    # - name: add instance to local inventory file
+    #   lineinfile:
+    #     path: ./hosts
+    #     line: "scallop-demo ansible_host={{ eip.public_ip }}"
+    #     create: yes
 
     - name: output instance info
       debug:
