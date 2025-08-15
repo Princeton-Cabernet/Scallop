@@ -56,20 +56,6 @@
             - "{{ sg.group_id }}"
       register: ec2
 
-    # - name: attach eip
-    #   amazon.aws.ec2_eip:
-    #     region: "{{ region }}"
-    #     device_id: "{{ ec2.instances[0].instance_id }}"
-    #     public_ip: 18.233.50.103
-    #     state: present
-    #   register: eip
-
-    # - name: add instance to local inventory file
-    #   lineinfile:
-    #     path: ./hosts
-    #     line: "scallop-demo ansible_host={{ eip.public_ip }}"
-    #     create: yes
-
     - name: output instance info
       debug:
         var: ec2.instances
