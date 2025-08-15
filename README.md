@@ -66,6 +66,28 @@ build/agent/tofino_agent -l <veth>
 
 ...
 
+## Demo VM for SIGCOMM 2025 Artifact Evaluation
+
+We provide a demo virtual machine for the SIGCCOMM '25 Artifact Evaluation on AWS EC2. In this
+section of the README, we explain the steps required to execute to log in to the EC2 instance,
+run Scallop and conduct a video conference that uses the Intel Tofino software model.
+
+### Step 1: Logging into the AWS EC2 Instance
+
+1. Paste the SSH private key available on HotCRP into a file called `scallop-demo-key.pem`.
+2. Move this file to your system's `.ssh` directory by executing in a terminal:
+```bash
+mv scallop-demo-key.pem ~/.ssh/
+```
+3. Change the file permissions of the SSH key file to one permitted by AWS, by executing in a terminal:
+```bash
+chmod 400 ~/.ssh/scallop-demo-key.pem
+```
+4. Log into the EC2 instance by executing in a terminal:
+```bash
+ssh -i ~/.ssh/scallop-demo-key.pem ubuntu@demo.p4-sfu.net
+```
+
 ## License
 
 This project's source code is released under the [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0.html). In particular,
