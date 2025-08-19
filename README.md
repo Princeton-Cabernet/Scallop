@@ -87,6 +87,31 @@ chmod 400 ~/.ssh/scallop-demo-key.pem
 ```bash
 ssh -i ~/.ssh/scallop-demo-key.pem ubuntu@demo.p4-sfu.net
 ```
+5. Retrieve the VNC password by executing in a terminal:
+```bash
+cat ~/VNC_PASSWORD.txt
+```
+
+### Step 2: Connect to the EC2 instance using VNC
+
+1. Forward the VNC port (5901) from the EC2 instance to your local machine by executing in a terminal:
+```bash
+ssh -i ~/.ssh/scallop-demo-key.pem -L 5901:localhost:5901 ubuntu@demo.p4-sfu.net
+```
+2. Open a VNC client on your local machine and connect to `localhost:5901`
+3. Enter the VNC password retrieved in Step 1, and you should see the desktop of the EC2 instance.
+
+### Step 3: Start Scallop
+
+1. In your SSH session, navigate to `~/opt/scallop`
+```bash
+cd ~/opt/scallop
+```
+2. Start the Scallop controller by executing:
+```bash
+build/controller/controller
+```
+
 
 ## License
 

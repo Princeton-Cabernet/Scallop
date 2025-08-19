@@ -2,7 +2,26 @@
 - name: provision
   hosts: demo.p4-sfu.net
 
+  vars:
+    controller_hostname: "ip-172-31-87-146.ec2.internal"
+    controller_ip: "172.31.87.146"
+
   tasks:
+
+    - name: install dependencies
+      apt:
+        name:
+          - cmake
+          - g++
+          - libboost-dev
+          - libnice-dev
+          - libpcap-dev
+          - pkg-config
+          - wget
+        state: present
+        update_cache: yes
+      become: yes
+
     - name: clone repository
       git:
         repo: https://github.com/Princeton-Cabernet/Scallop.git
@@ -15,11 +34,39 @@
         state: directory
 
     - name: run cmake
-      command: cmake ..
+      command: cmake CMAKE_BUILD_TYPE=Release CMAKE_CXX_COMPILER=g++ ..
       args:
         chdir: /home/{{ ansible_user }}/opt/scallop/build
 
     - name: build project
-      command: make -j$(nproc)
+      command: "make -j{{ansible_processor_nproc}}"
       args:
         chdir: /home/{{ ansible_user }}/opt/scallop/build
+
+    - name: run unit tests
+      ansible.builtin.command: "test/unit"
+      args:
+        chdir: /home/{{ ansible_user }}/opt/scallop/build
+      register: unit_result
+      changed_when: false
+      failed_when: unit_result.rc != 0
+
+    - name: create private key
+      community.crypto.openssl_privatekey:
+        path: /home/{{ ansible_user }}/opt/scallop/key.pem
+
+    - name: create certificate signing request (csr) for self-signed certificate
+      community.crypto.openssl_csr_pipe:
+        privatekey_path: /home/{{ ansible_user }}/opt/scallop/key.pem
+        common_name: "{{controller_hostname}}"
+        organization_name: Princeton University
+        subject_alt_name:
+          - "IP:{{controller_ip}}"
+      register: csr
+
+    - name: create self-signed certificate from csr
+      community.crypto.x509_certificate:
+        path: /home/{{ ansible_user }}/opt/scallop/cert.pem
+        csr_content: "{{csr.csr}}"
+        privatekey_path: /home/{{ ansible_user }}/opt/scallop/key.pem
+        provider: selfsigned
