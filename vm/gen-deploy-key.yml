@@ -1,0 +1,19 @@
+---
+- name: generate deploy keys
+  hosts: demo.p4-sfu.net
+  tasks:
+    - name: generate ssh key scallop_github_deploy_key
+      community.crypto.openssh_keypair:
+        path: /home/{{ ansible_user }}/.ssh/scallop_github_deploy_key
+        type: ed25519
+        size: 4096
+        state: present
+        force: no
+
+    - name: display public key contents
+      command: "cat /home/{{ ansible_user }}/.ssh/scallop_github_deploy_key.pub"
+      register: command_output
+
+    - name: print to console
+      debug:
+        msg: "{{command_output.stdout}}"

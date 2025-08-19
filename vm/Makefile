@@ -6,4 +6,10 @@ launch: launch.yml
 provision: provision.yml
 	$(AP) -i hosts $<
 
-.PHONY: launch provision
+gen-deploy-key: gen-deploy-key.yml
+	$(AP) -i hosts $<
+
+install-scallop: install-scallop.yml
+	$(AP) -i hosts $<
+
+.PHONY: launch provision gen-deploy-key install-scallop

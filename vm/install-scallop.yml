@@ -1,0 +1,25 @@
+---
+- name: provision
+  hosts: demo.p4-sfu.net
+
+  tasks:
+    - name: clone repository
+      git:
+        repo: https://github.com/Princeton-Cabernet/Scallop.git
+        dest: /home/{{ ansible_user }}/opt/scallop
+        version: main
+
+    - name: create build directory
+      file:
+        path: /home/{{ ansible_user }}/opt/scallop/build
+        state: directory
+
+    - name: run cmake
+      command: cmake ..
+      args:
+        chdir: /home/{{ ansible_user }}/opt/scallop/build
+
+    - name: build project
+      command: make -j$(nproc)
+      args:
+        chdir: /home/{{ ansible_user }}/opt/scallop/build
