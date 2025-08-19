@@ -1,12 +1,83 @@
 ---
 - name: provision
-  hosts: scallop-vm
-  become: yes
-  tasks:
-    - name: update apt cache
-      apt:
-        update_cache: yes
+  hosts: demo.p4-sfu.net
 
-    - name: upgrade all packages
+  vars:
+    vnc_display: ":1"
+    vnc_desktop: "ip-172-31-87-146{{vnc_display}}"
+
+  tasks:
+
+    - name: install required packages
       apt:
-        upgrade: dist
+        pkg:
+          - ubuntu-desktop
+          - tightvncserver
+          - gnome-panel
+          - gnome-settings-daemon
+          - metacity
+          - nautilus
+          - gnome-terminal
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: ensure ~/.vnc directory exists
+      file:
+        path: /home/{{ ansible_user }}/.vnc
+        state: directory
+        mode: '0700'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: write xstartup file
+      template:
+        src: xstartup.j2
+        dest: /home/{{ ansible_user }}/.vnc/xstartup
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 'u=rwx'
+    
+    - name: start VNC server on display :1
+      ansible.builtin.command: "vncserver {{ vnc_display }}"
+      args:
+        creates: "/home/{{ ansible_user }}/.vnc/{{vnc_desktop}}.pid"
+
+    - name: install required packages
+      apt:
+        pkg:
+          - curl
+          - software-properties-common
+          - apt-transport-https
+          - ca-certificates
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: download Google signing key
+      ansible.builtin.get_url:
+        url: https://dl.google.com/linux/linux_signing_key.pub
+        dest: /tmp/linux_signing_key.pub
+        mode: '0644'
+
+    - name: import Google signing key
+      ansible.builtin.command:
+        cmd: gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg /tmp/linux_signing_key.pub
+        creates: /usr/share/keyrings/google-chrome.gpg
+      become: yes
+
+    - name: add Chrome apt repository
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/google-chrome.list
+        content: |
+          deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
+        owner: root
+        group: root
+        mode: '0644'
+      become: yes
+
+    - name: install Dev Chrome
+      apt:
+        name: google-chrome-unstable
+        state: present
+      become: yes
