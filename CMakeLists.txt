@@ -10,8 +10,6 @@ if (APPLE)
     set(CMAKE_CXX_FLAGS "-Wl,-ld_classic")
 endif()
 
-cmake_policy(SET CMP0167 NEW)
-
 include(cmake/boost.cmake)
 include(cmake/catch2.cmake)
 include(cmake/cxxopts.cmake)
