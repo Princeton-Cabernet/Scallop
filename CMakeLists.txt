@@ -24,6 +24,7 @@ find_package(Threads REQUIRED)
 set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 
 add_subdirectory(controller)
+add_subdirectory(model)
 add_subdirectory(test)
 add_subdirectory(tofino_agent)
 add_subdirectory(util)
