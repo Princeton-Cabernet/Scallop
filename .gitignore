@@ -1,7 +1,12 @@
-_b
+.idea
 .vscode
+_b
 build
-ext
-test/include/catch.h
 cert.pem
+ext
 key.pem
+scallop.key
+scallop.crt
+test/include/catch.h
+run_browser_macos.sh
+run_browser_ubuntu.sh
