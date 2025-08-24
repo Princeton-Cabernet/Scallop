@@ -1,5 +1,5 @@
 
-find_package(Boost 1.74 REQUIRED)
+find_package(Boost 1.74 CONFIG REQUIRED)
 
 if (Boost_FOUND)
     message(STATUS "Found boost v${Boost_VERSION}")

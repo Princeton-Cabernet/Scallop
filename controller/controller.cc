@@ -262,7 +262,7 @@ void p4sfu::Controller::_onClientOffer(ControllerClientConnection& c, const rpc:
 
 void p4sfu::Controller::_onClientAnswer(ControllerClientConnection& c, const rpc::cl::Answer& m) {
 
-    Log(Log::INFO) << "Controller: _onClientAnswer: sessionID=" << c.meta().participantId
+    Log(Log::INFO) << "Controller: _onClientAnswer: sessionID=" << c.meta().sessionId
                    << ", participantID=" << c.meta().participantId << ", got answer" << std::endl;
 
     // retrieve session object for provided meta data:
