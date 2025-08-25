@@ -163,12 +163,24 @@ public:
 
         void _handleRequest() {
 
+            if (_request.target().empty()) {
+                std::cout << "HTTPServer: _handleRequest(): empty target - return 400" << std::endl;
+                _returnStatus(http::status::bad_request);
+                return;
+            }
+
+            if (_request.method() != http::verb::get) {
+                std::cout << "HTTPServer: _handleRequest(): non-get request - return 405" << std::endl;
+                _returnStatus(http::status::method_not_allowed);
+                return;
+            }
+
             Target target{std::string{_request.target()}};
 
             boost::beast::error_code ec;
 
             if (_server._routes.find(target.path()) != _server._routes.end()) {
-
+                std::cout << "HTTPServer: _handleRequest(): resource found " << target.path() << std::endl;
                 _server._routes[target.path()](*this, target);
                 return;
             }
@@ -241,7 +253,14 @@ public:
             }
 
             response.prepare_payload();
-            http::write(_stream, response);
+
+            boost::beast::error_code ec;
+
+            http::write(_stream, response, ec);
+
+            if (ec) {
+                std::cout << "HTTPServer: _returnStatus(): write failed: " << ec.message() << std::endl;
+            }
         }
 
         HTTPServer& _server;
