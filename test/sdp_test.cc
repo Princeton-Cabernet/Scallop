@@ -744,16 +744,20 @@ TEST_CASE("SDP::directionString", "[sdp]") {
 
 TEST_CASE("SDP::filterCandidatesBySubnet", "[sdp]") {
 
-    std::string candidateLine1 = "a=candidate:2170762578 1 udp 2122194687 172.16.21.51 54903 typ host generation 0 network-id 1 network-cost 10";
-    std::string candidateLine2 = "a=candidate:2170762579 1 udp 2122194600 10.0.0.2 54922 typ host generation 0 network-id 1 network-cost 10";
+    std::vector candidates = {
+        SDP::ICECandidate("a=candidate:1467952726 1 udp 2122260224 172.18.0.1 56877 typ host generation 0 network-id 1"),
+        SDP::ICECandidate("a=candidate:331806895 1 udp 2122194688 172.17.0.83 53639 typ host generation 0 network-id 2"),
+        SDP::ICECandidate("a=candidate:2249264334 1 udp 2122192152 10.0.211.2 33747 typ host generation 0 network-id 3")
+    };
 
-    std::vector candidates = {SDP::ICECandidate(candidateLine1), SDP::ICECandidate(candidateLine2)};
-    auto filtered = SDP::filterCandidatesBySubnet(candidates, net::IPv4Prefix{"10.0.0.0", 24});
-
+    CHECK(candidates.size() == 3);
+    auto filtered = SDP::filterCandidatesBySubnet(candidates, net::IPv4Prefix{"10.0.211.0", 24});
     CHECK(filtered.size() == 1);
+
     CHECK(std::find_if(filtered.begin(), filtered.end(), [&](const SDP::ICECandidate& c) {
-        return c.address == "10.0.0.2";
+        return c.address == "10.0.211.2";
     }) != filtered.end());
+
 }
 
 TEST_CASE("SDP::highestPriorityICECandidate", "[sdp]") {
