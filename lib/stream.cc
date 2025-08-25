@@ -21,6 +21,10 @@ p4sfu::Stream::Stream(const SDP::MediaDescription& media, const p4sfu::SFUConfig
 
         auto filtered =
                 SDP::filterCandidatesBySubnet(_description.iceCandidates, sfuConfig.netLimit());
+
+        if (filtered.empty())
+            throw std::invalid_argument("Stream: Stream(): no ICE candidates matching subnet filter");
+
         auto highest = SDP::highestPriorityICECandidate(filtered);
 
         SendStreamConfig ss;
@@ -49,6 +53,10 @@ p4sfu::Stream::Stream(const SDP::MediaDescription& media, const p4sfu::SFUConfig
 
         auto filtered =
                 SDP::filterCandidatesBySubnet(_description.iceCandidates, sfuConfig.netLimit());
+
+        if (filtered.empty())
+            throw std::invalid_argument("Stream: Stream(): no ICE candidates matching subnet filter");
+
         auto highest = SDP::highestPriorityICECandidate(filtered);
 
         ReceiveStreamConfig rs;
