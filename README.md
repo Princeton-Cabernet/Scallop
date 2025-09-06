@@ -66,51 +66,6 @@ build/agent/tofino_agent -l <veth>
 
 ...
 
-## Demo VM for SIGCOMM 2025 Artifact Evaluation
-
-We provide a demo virtual machine for the SIGCCOMM '25 Artifact Evaluation on AWS EC2. In this
-section of the README, we explain the steps required to execute to log in to the EC2 instance,
-run Scallop and conduct a video conference that uses the Intel Tofino software model.
-
-### Step 1: Logging into the AWS EC2 Instance
-
-1. Paste the SSH private key available on HotCRP into a file called `scallop-demo-key.pem`.
-2. Move this file to your system's `.ssh` directory by executing in a terminal:
-```bash
-mv scallop-demo-key.pem ~/.ssh/
-```
-3. Change the file permissions of the SSH key file to one permitted by AWS, by executing in a terminal:
-```bash
-chmod 400 ~/.ssh/scallop-demo-key.pem
-```
-4. Log into the EC2 instance by executing in a terminal:
-```bash
-ssh -i ~/.ssh/scallop-demo-key.pem ubuntu@demo.p4-sfu.net
-```
-5. Retrieve the VNC password by executing in a terminal:
-```bash
-cat ~/VNC_PASSWORD.txt
-```
-
-### Step 2: Connect to the EC2 instance using VNC
-
-1. Forward the VNC port (5901) from the EC2 instance to your local machine by executing in a terminal:
-```bash
-ssh -i ~/.ssh/scallop-demo-key.pem -L 5901:localhost:5901 ubuntu@demo.p4-sfu.net
-```
-2. Open a VNC client on your local machine and connect to `localhost:5901`
-3. Enter the VNC password retrieved in Step 1, and you should see the desktop of the EC2 instance.
-
-### Step 3: Start Scallop
-
-1. In your SSH session, navigate to `~/opt/scallop`
-```bash
-cd ~/opt/scallop
-```
-2. Start the Scallop controller by executing:
-```bash
-build/controller/controller
-```
 
 
 ## License
