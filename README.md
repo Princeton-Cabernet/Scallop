@@ -61,8 +61,14 @@ build/agent/tofino_agent -l <veth>
 
 ### Tofino PRE Adapter
 
+The following version of the command works with the software data-plane implementation:
 ```shell
 hardware/tofino/control_plane/tofino_interface.py
+```
+
+When deploying the actual Tofino P4 implementation, use this version of the command instead:
+```shell
+hardware/tofino/control_plane/tofino_interface.py --hardware
 ```
 
 ### Software Model
@@ -80,6 +86,10 @@ or
 ```shell
 client/run_browser_ubuntu.sh
 ```
+
+### Hardware Prototypes
+
+The hardware prototypes described and evaluated in the paper are available under `hardware/`: The Tofino P4 code is available in `hardware/tofino/data_plane` and the Bluefield-3 P4 code is available in `hardware/bluefield`.
 
 ## License
 
