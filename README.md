@@ -12,10 +12,12 @@
 
 > Oliver Michel, Satadal Sengupta, Hyojoon Kim, Ravi Netravali, and Jennifer Rexford. 2025. Scalable Video Conferencing Using SDN Principles. In ACM SIGCOMM 2025 Conference (SIGCOMM ’25), September 8–11, 2025, Coimbra, Portugal. ACM, New York, NY, USA, 19 pages. https://doi.org/10.1145/3718958.3750489
 
+The paper is also available [here](scallop.pdf).
+
 
 ## Building the code
 
-### Controller and Switch Agent
+### Controller, Switch Agent, Data-Plane Model
 
 ```shell
 mkdir build
@@ -23,9 +25,6 @@ cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j$(nproc)
 ```
-
-### Data Plane
-
 
 ### Client Application
 
@@ -46,10 +45,12 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem \
 
 ## Run Scallop
 
+Scallop primarily runs on Intel Tofino-based programmable switches. We provide instructions for running Scallop on a Tofino switch below. Alternatively, Scallop also comes with a software data-plane implementation that runs on a commodity server. The software mimics the internals and behavior of the Tofino data plane as closely as possible.
+
 ### Controller
 
 ```shell
-build/controller/controller
+build/controller/controller -d <data_plane_ip:port>
 ```
 
 ### Tofino Agent
@@ -60,13 +61,25 @@ build/agent/tofino_agent -l <veth>
 
 ### Tofino PRE Adapter
 
-...
+```shell
+hardware/tofino/control_plane/tofino_interface.py
+```
+
+### Software Model
+
+```shell
+build/model/model
+```
 
 ### Client
 
-...
-
-
+```shell
+client/run_browser_macos.sh
+```
+or
+```shell
+client/run_browser_ubuntu.sh
+```
 
 ## License
 
